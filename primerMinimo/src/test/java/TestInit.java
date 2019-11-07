@@ -1,16 +1,31 @@
+import org.junit.Before;
 import org.junit.Test;
+import java.util.LinkedList;
+import java.util.List;
 
 public class TestInit {
+
+    @Before
     @Test
     public void setUp(){
-        //Product[]store; Order[] historyOrder; Product[] sales;
-        Product product1 = new Product("nombre", 14.6, 10);
-        Product product2 = new Product("nombre", 15.6, 10);
-        Product[] listaStock = new Product[2];
-        listaStock[0] = product1;
-        listaStock[1] = product2;
         ProductManagerImp p1 = new ProductManagerImp().getInstance();
-        p1.setStore(listaStock);
+
+        //Product[]store; Order[] historyOrder; Product[] sales;
+        List<Product> listadoProductos = new LinkedList<Product>();
+        Product productoprueba = null;
+
+        productoprueba = new Product("Caña de pescar", 14.6, 10);
+        listadoProductos.add(productoprueba);
+
+        productoprueba = new Product("Mapa", 10, 2);
+        listadoProductos.add(productoprueba);
+
+        productoprueba = new Product("Botas de agua", 25.5879,1);
+        listadoProductos.add(productoprueba);
+
+        p1.setStore(listadoProductos);
+        p1.sortProducts();
 
     }
+
 }

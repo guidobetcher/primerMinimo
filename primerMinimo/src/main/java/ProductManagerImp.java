@@ -1,4 +1,5 @@
-import java.util.Arrays;
+
+import java.util.*;
 import java.util.logging.Logger;
 
 public class ProductManagerImp implements ProductManager {
@@ -7,14 +8,15 @@ public class ProductManagerImp implements ProductManager {
     private static Logger log = Logger.getLogger(ProductManagerImp.class.getName());
 
     /* Creamos atributos privados para implementar Singleton */
-    private Product[] store;
-    private Order[] historyOrder;
+    private List<Product> store;
+    private List<Order> pedidos;
+    private List<Order> historyOrder;
     private Product[] sales;
 
     private static ProductManagerImp instance;
 
     /*Constructor privado*/
-    private ProductManagerImp(Product[]store, Order[] historyOrder, Product[] sales) {
+    private ProductManagerImp(List<Product> store, Order[] historyOrder, Product[] sales) {
         this.setStore(store);
         this.setHistoryOrder(historyOrder);
         this.setSales(sales);
@@ -22,6 +24,7 @@ public class ProductManagerImp implements ProductManager {
 
     /*En SINGLETON ESTÁ VACÍO????*/
     protected ProductManagerImp(){
+
         }
 
     /*El método de getInstance debe ser public*/
@@ -33,23 +36,31 @@ public class ProductManagerImp implements ProductManager {
     /*-------------------------------------------------------------------*/
     /*GETTER AND SETTER*/
 
-    public Product[] getStore() {
+    public void setHistoryOrder(List<Order> historyOrder) {
+        this.historyOrder = historyOrder;
+    }
+
+    public static void setInstance(ProductManagerImp instance) {
+        ProductManagerImp.instance = instance;
+    }
+
+    public List<Product> getStore() {
 
         return store;
     }
 
-    public void setStore(Product[] store) {
+    public void setStore(List<Product> store) {
 
         this.store = store;
-        log.info(Arrays.toString(store));
+        //log.info(store.toString());
     }
 
-    public Order[] getHistoryOrder() {
+    public List<Order> getHistoryOrder() {
         return historyOrder;
     }
 
     public void setHistoryOrder(Order[] historyOrder) {
-        this.historyOrder = historyOrder;
+        this.historyOrder = Arrays.asList(historyOrder);
     }
 
     public Product[] getSales() {
@@ -62,6 +73,18 @@ public class ProductManagerImp implements ProductManager {
 
     /*-------------------------------------------------------------------*/
     /*MÉTODOS*/
+
+    public List<Product> sortProducts() {
+        //Rehusado del Company Manager
+        List pList = new LinkedList<Product>();
+        pList.addAll(this.store);
+
+        //PODEMOS METER UN MENSAJE EN E MISMO COMANDO?
+        log.info(pList.toString());
+        log.info(pList);
+        Collections.sort(pList);
+        return pList;
+    }
 
     public void sortProducts(Product[] pList) {
 

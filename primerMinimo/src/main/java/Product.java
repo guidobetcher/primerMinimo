@@ -1,12 +1,14 @@
-public class Product {
+
+ class Product implements Comparable<Product>{
     private String name;
     private double price;
     private int stock;
 
-    public Product(String n, double p, int s){
-        this.setName(n);
-        this.setPrice(p);
-        this.setStock(s);
+
+    public Product(String nom, double preu, int cantitat){
+        this.setName(nom);
+        this.setPrice(preu);
+        this.setStock(cantitat);
     }
     public String getName() {
         return name;
@@ -30,5 +32,9 @@ public class Product {
 
     public void setStock(int stock) {
         this.stock = stock;
+    }
+
+    public int compareTo(Product p){
+        return (int) (this.price-p.price);
     }
 }
