@@ -1,18 +1,15 @@
+import java.util.Queue;
+
 public interface ProductManager {
-
-    //Listado ordenado ascendente de productos por precio
-    void sortProducts (Product[] pList);
-
-    //Realiza un nuevo pedido asociado a un usuario
-    void newOrder (Order order, User user);
-
-    //Sirve el pedido, es una cola?
-    void serveOrder (Order[] waitingOrders);
-
-    //Listado de pedidos que han sido realizados
-    //Debe haber un historico de pedidos
+    /*Ordena los productos por precio (de menor a mayor)*/
+    void sortPriceProducts (Product[] pList);
+    /*Se añade a la cola de pedidos la comanda hecha por el usuario*/
+    void newOrder (Product[] products, User user);
+    /*Es atendido el pedido que toca (el mas antiguo)*/
+    void serveOrder (Queue<Order> waitingOrders);
+    /*Devuelve la lista de pedidos que se le han servido a un usuario*/
     Order listOrder(User user);
-
-    //Listado de productos ordenado de mas a menos ventas
+    /*Ordena los pedidos de mas vendido a menos*/
+    void sortSellProducts (Product[] pList);
     void productList();
 }

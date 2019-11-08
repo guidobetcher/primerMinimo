@@ -1,14 +1,15 @@
+import java.util.Comparator;
 
- class Product implements Comparable<Product>{
+public class Product {
     private String name;
     private double price;
     private int stock;
+    private int sells;
 
-
-    public Product(String nom, double preu, int cantitat){
-        this.setName(nom);
-        this.setPrice(preu);
-        this.setStock(cantitat);
+    public Product(String n, double p, int s){
+        this.setName(n);
+        this.setPrice(p);
+        this.setStock(s);
     }
     public String getName() {
         return name;
@@ -34,7 +35,9 @@
         this.stock = stock;
     }
 
-    public int compareTo(Product p){
-        return (int) (this.price-p.price);
-    }
+    public void setSells(int sells) { this.sells = sells; }
+
+    public int getSells() { return sells; }
+
 }
+

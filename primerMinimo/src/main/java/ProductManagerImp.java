@@ -1,5 +1,6 @@
-
-import java.util.*;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Queue;
 import java.util.logging.Logger;
 
 public class ProductManagerImp implements ProductManager {
@@ -8,24 +9,22 @@ public class ProductManagerImp implements ProductManager {
     private static Logger log = Logger.getLogger(ProductManagerImp.class.getName());
 
     /* Creamos atributos privados para implementar Singleton */
-    private List<Product> store;
-    private List<Order> pedidos;
-    private List<Order> historyOrder;
+    private Product[] store;
+    private Queue<Order> waitingOrders;
     private Product[] sales;
 
     private static ProductManagerImp instance;
 
     /*Constructor privado*/
-    private ProductManagerImp(List<Product> store, Order[] historyOrder, Product[] sales) {
+    private ProductManagerImp(Product[]store, Queue<Order> waitingOrders, Product[] sales) {
         this.setStore(store);
-        this.setHistoryOrder(historyOrder);
+        this.setWaitingOrders(waitingOrders);
         this.setSales(sales);
     }
 
     /*En SINGLETON ESTÁ VACÍO????*/
     protected ProductManagerImp(){
-
-        }
+    }
 
     /*El método de getInstance debe ser public*/
     public static ProductManagerImp getInstance(){
@@ -36,31 +35,23 @@ public class ProductManagerImp implements ProductManager {
     /*-------------------------------------------------------------------*/
     /*GETTER AND SETTER*/
 
-    public void setHistoryOrder(List<Order> historyOrder) {
-        this.historyOrder = historyOrder;
-    }
-
-    public static void setInstance(ProductManagerImp instance) {
-        ProductManagerImp.instance = instance;
-    }
-
-    public List<Product> getStore() {
+    public Product[] getStore() {
 
         return store;
     }
 
-    public void setStore(List<Product> store) {
+    public void setStore(Product[] store) {
 
         this.store = store;
-        //log.info(store.toString());
+        log.info(Arrays.toString(store));
     }
 
-    public List<Order> getHistoryOrder() {
-        return historyOrder;
+    public Queue<Order> getWaitingOrders() {
+        return waitingOrders;
     }
 
-    public void setHistoryOrder(Order[] historyOrder) {
-        this.historyOrder = Arrays.asList(historyOrder);
+    public void setWaitingOrders(Queue<Order> waitingOrders) {
+        this.waitingOrders = waitingOrders;
     }
 
     public Product[] getSales() {
@@ -73,38 +64,40 @@ public class ProductManagerImp implements ProductManager {
 
     /*-------------------------------------------------------------------*/
     /*MÉTODOS*/
-
-    public List<Product> sortProducts() {
-        //Rehusado del Company Manager
-        List pList = new LinkedList<Product>();
-        pList.addAll(this.store);
-
-        //PODEMOS METER UN MENSAJE EN E MISMO COMANDO?
-        log.info(pList.toString());
-        log.info(pList);
-        Collections.sort(pList);
-        return pList;
+    class SortByPrice implements Comparator<Product> {
+        public int compare(Product o, Product p)  {
+            return (int)(p.getPrice()-o.getPrice());
+        }
+    }
+    class SortBySells implements Comparator<Product> {
+        public int compare(Product o, Product p)  {
+            return (int)(p.getSells()-o.getSells());
+        }
     }
 
-    public void sortProducts(Product[] pList) {
+    public void sortPriceProducts(Product[] pList) { Arrays.sort(pList, new SortByPrice()); }
 
+    public void newOrder(Product[] products, User user) {
+        Order order = new Order(products, user);
+        this.waitingOrders.add(order);
     }
 
-    public void newOrder(Order order, User user) {
-
-    }
-
-    public void serveOrder(Order[] waitingOrders) {
-
+    public void serveOrder(Queue<Order> waitingOrders) {
+        Order servedOrder = waitingOrders.element();
+        /*Le sumo una venta al producto*/
+        for (Product p:servedOrder.products) {p.setSells(p.getSells() + 1);}
     }
 
     public Order listOrder(User user) {
         return null;
     }
 
+    public void sortSellProducts (Product[] pList) {Arrays.sort(pList, new SortBySells());}
+
     public void productList() {
 
     }
+
 
     /*-------------------------------------------------------------------*/
 
