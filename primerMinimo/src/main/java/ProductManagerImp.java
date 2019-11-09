@@ -1,5 +1,6 @@
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Queue;
 import java.util.logging.Logger;
 
@@ -78,24 +79,46 @@ public class ProductManagerImp implements ProductManager {
     public void sortPriceProducts(Product[] pList) { Arrays.sort(pList, new SortByPrice()); }
 
     public void newOrder(Product[] products, User user) {
-        Order order = new Order(products, user);
-        this.waitingOrders.add(order);
+        int cancellOrder = 0;
+        /*Miro la disponibilidad de los productos*/
+        for (Product p:
+             products) {
+            if (p.getStock() == 0){
+                /*Se le dice que ese producto esta agotado*/
+                cancellOrder = 1;
+                break;
+            }
+            else{
+                p.setStock(p.getStock() - 1);
+            }
+        }
+        if(cancellOrder == 0) {
+            /*El pedido se ha realizado correctamente*/
+            Order order = new Order(products, user);
+            this.waitingOrders.add(order);
+        }
     }
 
     public void serveOrder(Queue<Order> waitingOrders) {
         Order servedOrder = waitingOrders.element();
-        /*Le sumo una venta al producto*/
-        for (Product p:servedOrder.products) {p.setSells(p.getSells() + 1);}
+        /*Le sumo una venta al producto y añado la orden al historial del usuario*/
+        for (Product p:servedOrder.products) {
+            p.setSells(p.getSells() + 1);
+            servedOrder.user.historyOrders.add(servedOrder);
+        }
     }
 
-    public Order listOrder(User user) {
-        return null;
+    public List<Order> listOrder(User user) {
+        List<Order> resList = null;
+        for (Order o:user.historyOrders) {
+            resList.add(o);
+        }
+        return resList;
     }
 
     public void sortSellProducts (Product[] pList) {Arrays.sort(pList, new SortBySells());}
 
     public void productList() {
-
     }
 
 

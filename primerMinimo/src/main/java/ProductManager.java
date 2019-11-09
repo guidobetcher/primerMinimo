@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Queue;
 
 public interface ProductManager {
@@ -8,8 +9,7 @@ public interface ProductManager {
     /*Es atendido el pedido que toca (el mas antiguo)*/
     void serveOrder (Queue<Order> waitingOrders);
     /*Devuelve la lista de pedidos que se le han servido a un usuario*/
-    Order listOrder(User user);
+    List<Order> listOrder(User user);
     /*Ordena los pedidos de mas vendido a menos*/
     void sortSellProducts (Product[] pList);
-    void productList();
 }

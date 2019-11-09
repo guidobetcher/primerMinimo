@@ -1,4 +1,6 @@
+import java.util.List;
+
 public class User {
     String name;
-    Product[] historyProducts;
+    List<Order> historyOrders;
 }
