@@ -105,12 +105,13 @@ public class ProductManagerImp implements ProductManager {
         }
     }
 
-    public void serveOrder(Queue<Order> waitingOrders) {
-        Order servedOrder = waitingOrders.element();
+    public void serveOrder() {
+        Order servedOrder = this.waitingOrders.element();
         /*Le sumo una venta al producto y añado la orden al historial del usuario*/
         for (Product p:servedOrder.products) {
             p.setSells(p.getSells() + 1);
-            servedOrder.user.historyOrders.add(servedOrder);
+            User u = servedOrder.getUser();
+            u.historyOrders.add(servedOrder);
         }
     }
 

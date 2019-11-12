@@ -14,7 +14,7 @@ public class TestInit {
         ProductManagerImp p1 = new ProductManagerImp().getInstance();
 
         //dsa.models.Product[]store; dsa.models.Order[] historyOrder; dsa.models.Product[] sales;
-        List<Product> listadoProductos = new LinkedList<Product>();
+        Product[] listadoProductos;
         Product productoprueba = null;
 
         productoprueba = new Product("Caña de pescar", 14.6, 10);
@@ -27,7 +27,6 @@ public class TestInit {
         listadoProductos.add(productoprueba);
 
         p1.setStore(listadoProductos);
-        p1.sortProducts();
 
     }
 
