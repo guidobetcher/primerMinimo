@@ -3,6 +3,6 @@ package dsa.models;
 import java.util.List;
 
 public class User {
-    String name;
-    List<Order> historyOrders;
+    public String name;
+    public List<Order> historyOrders;
 }
