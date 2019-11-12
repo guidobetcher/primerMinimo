@@ -1,3 +1,4 @@
+
 import dsa.models.Product;
 import dsa.main.ProductManagerImp;
 import org.junit.Before;
@@ -6,27 +7,24 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class TestInit {
-
     @Before
-
     @Test
     public void setUp(){
-        ProductManagerImp p1 = new ProductManagerImp().getInstance();
+        //ProductManagerImp p1 = new ProductManagerImp().getInstance();
+        ProductManagerImp p1 = new ProductManagerImp();
 
         //dsa.models.Product[]store; dsa.models.Order[] historyOrder; dsa.models.Product[] sales;
-        Product[] listadoProductos;
+
+        /*El listado de productos tiene que ser una lista para poder poder add*/
+        List<Product> listadoProductos = null;
         Product productoprueba = null;
 
-        productoprueba = new Product("Caña de pescar", 14.6, 10);
-        listadoProductos.add(productoprueba);
+        p1.addProduct("Caña de pescar", 14.6, 10);
 
-        productoprueba = new Product("Mapa", 10, 2);
-        listadoProductos.add(productoprueba);
+        p1.addProduct("Mapa", 10, 2);
 
-        productoprueba = new Product("Botas de agua", 25.5879,1);
-        listadoProductos.add(productoprueba);
+        p1.addProduct("Botas de agua", 25.5879,1);
 
-        p1.setStore(listadoProductos);
 
     }
 

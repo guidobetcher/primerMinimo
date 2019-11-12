@@ -10,47 +10,46 @@ import java.util.List;
 import java.util.Queue;
 import java.util.logging.Logger;
 
-public class ProductManagerImp implements ProductManager {
-    //private static Logger log = Logger.getLogger(String.valueOf(dsa.main.ProductManagerImp.class));
 
+public class ProductManagerImp implements ProductManager {
+    /*Creamos la clase logger*/
     private static Logger log = Logger.getLogger(ProductManagerImp.class.getName());
 
     /* Creamos atributos privados para implementar Singleton */
-    private Product[] store;
+    private List<Product> store;
     private Queue<Order> waitingOrders;
-    private List<Product> sales;
+    private static ProductManagerImp instance=null;
 
-    private static ProductManagerImp instance;
-
-    /*Constructor privado*/
-    private ProductManagerImp(Product[] store, Queue<Order> waitingOrders, Product[] sales) {
+    /*Constructor privado
+    private ProductManagerImp(Product[] store, Queue<Order> waitingOrders) {
         this.setStore(store);
         this.setWaitingOrders(waitingOrders);
-        this.setSales(sales);
-    }
+    }*/
 
     /*En SINGLETON ESTÁ VACÍO????*/
-    protected ProductManagerImp(){
+    public ProductManagerImp(){
     }
 
     /*El método de getInstance debe ser public*/
     public static ProductManagerImp getInstance(){
-        if (instance==null) instance=new ProductManagerImp();
+        if (instance==null) {
+            instance=new ProductManagerImp();
+        }
         return instance;
     }
 
     /*-------------------------------------------------------------------*/
     /*GETTER AND SETTER*/
 
-    public Product[] getStore() {
+    public List<Product> getStore() {
 
         return store;
     }
 
-    public void setStore(Product[] store) {
+    public void setStore(List<Product> store) {
 
         this.store = store;
-        log.info(store.toString());
+        log.info("Valor despues"+store.toString());
     }
 
     public Queue<Order> getWaitingOrders() {
@@ -61,13 +60,6 @@ public class ProductManagerImp implements ProductManager {
         this.waitingOrders = waitingOrders;
     }
 
-    public Product[] getSales() {
-        return sales;
-    }
-
-    public void setSales(Product[] sales) {
-        this.sales = sales;
-    }
 
     /*-------------------------------------------------------------------*/
     /*MÉTODOS*/
@@ -78,8 +70,13 @@ public class ProductManagerImp implements ProductManager {
     }
     class SortBySells implements Comparator<Product> {
         public int compare(Product o, Product p)  {
-            return (int)(p.getSells()-o.getSells());
+            return (int)(p.getSales()-o.getSales());
         }
+    }
+
+    @Override
+    public int size() {
+        return this.store.size();
     }
 
     public void sortPriceProducts(Product[] pList) { Arrays.sort(pList, new SortByPrice()); }
@@ -109,7 +106,7 @@ public class ProductManagerImp implements ProductManager {
         Order servedOrder = this.waitingOrders.element();
         /*Le sumo una venta al producto y añado la orden al historial del usuario*/
         for (Product p:servedOrder.products) {
-            p.setSells(p.getSells() + 1);
+            p.setSales(p.getSales() + 1);
             User u = servedOrder.getUser();
             u.historyOrders.add(servedOrder);
         }
@@ -124,6 +121,23 @@ public class ProductManagerImp implements ProductManager {
     }
 
     public void sortSellProducts (Product[] pList) {Arrays.sort(pList, new SortBySells());}
+
+    @Override
+    public void addProduct(Product p0) {
+
+    }
+
+    public void addProduct(String name, double price, int cantidad) {
+        Product p0 = new Product(name, price,cantidad);
+        this.store.add(p0);
+        log.info("Añadido nuevo producto"+this.store);
+    }
+
+    @Override
+    public List<Product> findAll() {
+        Product List<Product>
+        return null;
+    }
 
 
 
