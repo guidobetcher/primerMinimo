@@ -7,7 +7,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class TestInit {
-    @Before
     @Test
     public void setUp(){
         //ProductManagerImp p1 = new ProductManagerImp().getInstance();
@@ -17,7 +16,6 @@ public class TestInit {
 
         /*El listado de productos tiene que ser una lista para poder poder add*/
         List<Product> listadoProductos = null;
-        Product productoprueba = null;
 
         p1.addProduct("Caña de pescar", 14.6, 10);
 

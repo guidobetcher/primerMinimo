@@ -15,5 +15,6 @@ public class Order {
     }
 
     public User getUser() {
+        return this.user;
     }
 }
