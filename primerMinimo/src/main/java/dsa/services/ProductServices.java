@@ -23,8 +23,8 @@ public class ProductServices {
 
     public ProductServices() {
         this.pm = ProductManagerImp.getInstance();
-        if (pm.size()==0) {
-            this.pm.addTrack("La Barbacoa", "Georgie Dann");
+        if (pm == null) {
+            this.pm.se("La Barbacoa", "Georgie Dann");
             this.pm.addTrack("Despacito", "Luis Fonsi");
             this.pm.addTrack("Enter Sandman", "Metallica");
         }
@@ -51,13 +51,13 @@ public class ProductServices {
     @GET
     @ApiOperation(value = "get a Track", notes = "asdasd")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = Track.class),
+            @ApiResponse(code = 201, message = "Successful", response = Product.class),
             @ApiResponse(code = 404, message = "Track not found")
     })
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTrack(@PathParam("id") String id) {
-        Track t = this.pm.getTrack(id);
+        Product t = this.pm.getProduct(id);
         if (t == null) return Response.status(404).build();
         else  return Response.status(201).entity(t).build();
     }

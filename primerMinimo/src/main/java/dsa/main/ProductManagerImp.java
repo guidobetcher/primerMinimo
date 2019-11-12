@@ -16,14 +16,14 @@ public class ProductManagerImp implements ProductManager {
     private static Logger log = Logger.getLogger(ProductManagerImp.class.getName());
 
     /* Creamos atributos privados para implementar Singleton */
-    private List<Product> store;
+    private Product[] store;
     private Queue<Order> waitingOrders;
-    private List<Product> sales;
+    private Product[] sales;
 
     private static ProductManagerImp instance;
 
     /*Constructor privado*/
-    private ProductManagerImp(Product[]store, Queue<Order> waitingOrders, Product[] sales) {
+    private ProductManagerImp(Product[] store, Queue<Order> waitingOrders, Product[] sales) {
         this.setStore(store);
         this.setWaitingOrders(waitingOrders);
         this.setSales(sales);
@@ -42,15 +42,15 @@ public class ProductManagerImp implements ProductManager {
     /*-------------------------------------------------------------------*/
     /*GETTER AND SETTER*/
 
-    public List<Product> getStore() {
+    public Product[] getStore() {
 
         return store;
     }
 
-    public void setStore(List<Product> store) {
+    public void setStore(Product[] store) {
 
         this.store = store;
-        log.info(List.toString(store));
+        log.info(toString(this.store));
     }
 
     public Queue<Order> getWaitingOrders() {
