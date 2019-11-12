@@ -3,7 +3,9 @@ package dsa.models;
 public class Order {
     public User user;
     public Product[] products;
-    public double orderPrice;
+    double orderPrice;
+
+
     public Order(Product[] products, User user){
         this.user = user;
         this.products = products;
@@ -12,4 +14,7 @@ public class Order {
         }
     }
 
+    public User getUser() {
+        return this.user;
+    }
 }

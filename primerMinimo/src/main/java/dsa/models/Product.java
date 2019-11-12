@@ -1,12 +1,10 @@
 package dsa.models;
 
-import java.util.Comparator;
-
 public class Product {
     private String name;
     private double price;
     private int stock;
-    private int sells;
+    private int sales;
 
     public Product(String n, double p, int s){
         this.setName(n);
@@ -41,9 +39,9 @@ public class Product {
         this.stock = stock;
     }
 
-    public void setSells(int sells) { this.sells = sells; }
+    public void setSales(int sales) { this.sales = sales; }
 
-    public int getSells() { return sells; }
+    public int getSales() { return sales; }
 
 }
 

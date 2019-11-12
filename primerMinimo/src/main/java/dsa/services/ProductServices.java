@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 
-@Api(value = "/products", description = "Endpoint to Track Service")
+@Api(value = "/products", description = "Endpoint to Product Service")
 @Path("/products")
 public class ProductServices {
 
@@ -23,10 +23,12 @@ public class ProductServices {
 
     public ProductServices() {
         this.pm = ProductManagerImp.getInstance();
-        if (pm == null) {
-            this.pm.se("La Barbacoa", "Georgie Dann");
-            this.pm.addTrack("Despacito", "Luis Fonsi");
-            this.pm.addTrack("Enter Sandman", "Metallica");
+        if (pm.size()==0) {
+            this.pm.addProduct("Caña de pescar", 14.6, 10);
+
+            this.pm.addProduct("Mapa", 10, 2);
+
+            this.pm.addProduct("Botas de agua", 25.5879,1);
         }
 
 
@@ -39,53 +41,53 @@ public class ProductServices {
     })
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getTracks() {
+    public Response getProducts() {
 
-        List<Product> tracks = this.pm.findAll();
+        List<Product> Products = this.pm.findAll();
 
-        GenericEntity<List<Track>> entity = new GenericEntity<List<Track>>(tracks) {};
+        GenericEntity<List<Product>> entity = new GenericEntity<List<Product>>(Products) {};
         return Response.status(201).entity(entity).build()  ;
 
     }
 
     @GET
-    @ApiOperation(value = "get a Track", notes = "asdasd")
+    @ApiOperation(value = "get a Product", notes = "asdasd")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Product.class),
-            @ApiResponse(code = 404, message = "Track not found")
+            @ApiResponse(code = 404, message = "Product not found")
     })
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getTrack(@PathParam("id") String id) {
+    public Response getProduct(@PathParam("id") String id) {
         Product t = this.pm.getProduct(id);
         if (t == null) return Response.status(404).build();
         else  return Response.status(201).entity(t).build();
     }
 
     @DELETE
-    @ApiOperation(value = "delete a Track", notes = "asdasd")
+    @ApiOperation(value = "delete a Product", notes = "asdasd")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful"),
-            @ApiResponse(code = 404, message = "Track not found")
+            @ApiResponse(code = 404, message = "Product not found")
     })
     @Path("/{id}")
-    public Response deleteTrack(@PathParam("id") String id) {
-        Product t = this.pm.getTrack(id);
+    public Response deleteProduct(@PathParam("id") String id) {
+        Product t = this.pm.getProduct(id);
         if (t == null) return Response.status(404).build();
-        else this.pm.deleteTrack(id);
+        else this.pm.deleteProduct(id);
         return Response.status(201).build();
     }
 
     @PUT
-    @ApiOperation(value = "update a Track", notes = "asdasd")
+    @ApiOperation(value = "update a Product", notes = "asdasd")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful"),
-            @ApiResponse(code = 404, message = "Track not found")
+            @ApiResponse(code = 404, message = "Product not found")
     })
     @Path("/")
-    public Response updateTrack(Product product) {
+    public Response updateProduct(Product product) {
 
-        Product t = this.pm.updateTrack(track);
+        Product t = this.pm.updateProduct(Product);
 
         if (t == null) return Response.status(404).build();
 
@@ -95,7 +97,7 @@ public class ProductServices {
 
 
     @POST
-    @ApiOperation(value = "create a new Track", notes = "asdasd")
+    @ApiOperation(value = "create a new Product", notes = "asdasd")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response=Product.class),
             @ApiResponse(code = 500, message = "Validation Error")
@@ -108,7 +110,7 @@ public class ProductServices {
     public Response newProduct(Product product) {
 
         if (product.getSinger()==null || product.getTitle()==null)  return Response.status(500).entity(product).build();
-        this.pm.addTrack(product);
+        this.pm.addProduct(product);
         return Response.status(201).entity(product).build();
     }
 
