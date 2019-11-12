@@ -18,7 +18,7 @@ public class ProductManagerImp implements ProductManager {
     /* Creamos atributos privados para implementar Singleton */
     private Product[] store;
     private Queue<Order> waitingOrders;
-    private Product[] sales;
+    private List<Product> sales;
 
     private static ProductManagerImp instance;
 
