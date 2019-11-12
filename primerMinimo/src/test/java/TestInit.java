@@ -1,3 +1,5 @@
+import dsa.models.Product;
+import dsa.main.ProductManagerImp;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.LinkedList;
@@ -10,7 +12,7 @@ public class TestInit {
     public void setUp(){
         ProductManagerImp p1 = new ProductManagerImp().getInstance();
 
-        //Product[]store; Order[] historyOrder; Product[] sales;
+        //dsa.models.Product[]store; dsa.models.Order[] historyOrder; dsa.models.Product[] sales;
         List<Product> listadoProductos = new LinkedList<Product>();
         Product productoprueba = null;
 
