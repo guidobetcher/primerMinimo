@@ -8,6 +8,7 @@ import java.util.List;
 public class TestInit {
 
     @Before
+
     @Test
     public void setUp(){
         ProductManagerImp p1 = new ProductManagerImp().getInstance();
