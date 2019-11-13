@@ -21,4 +21,12 @@ public interface ProductManager {
     void sortSellProducts (Product[] pList);
 
     void addProduct(String name, double price, int cantidad);
+
+    List<Product> findAll();
+
+    Product getProduct(String id);
+
+    void deleteProduct(String id);
+
+    Product updateProduct(Product product);
 }

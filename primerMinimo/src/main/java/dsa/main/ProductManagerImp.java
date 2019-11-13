@@ -3,9 +3,10 @@ package dsa.main;
 import dsa.models.Order;
 import dsa.models.Product;
 import dsa.models.User;
+import org.apache.log4j.Logger;
 
 import java.util.*;
-import java.util.logging.Logger;
+//import java.util.logging.Logger;
 
 
 public class ProductManagerImp implements ProductManager {
@@ -127,6 +128,43 @@ public class ProductManagerImp implements ProductManager {
         Product p0 = new Product(name, price, cantidad);
         this.store.add(p0);
         log.info("Añadido nuevo producto" + this.store);
+    }
+
+    @Override
+    public List<Product> findAll() {
+        return this.store;
+    }
+
+    @Override
+    public Product getProduct(String id) {
+        Product res = null;
+        for (Product p:this.store) {
+            if (p.getName() == id){
+                res = p;
+            }
+        }
+        return res;
+    }
+
+    @Override
+    public void deleteProduct(String id) {
+        for (Product p:this.store) {
+            if (p.getName() == id){
+                this.store.remove(p);
+            }
+        }
+    }
+
+    @Override
+    public Product updateProduct(Product product) {
+        Product res = null;
+        for (Product p:this.store) {
+            if (product.getName() == p.getName()){
+                p = product;
+                res = p;
+            }
+        }
+        return res;
     }
 }
 

@@ -87,7 +87,7 @@ public class ProductServices {
     @Path("/")
     public Response updateProduct(Product product) {
 
-        Product t = this.pm.updateProduct(Product);
+        Product t = this.pm.updateProduct(product);
 
         if (t == null) return Response.status(404).build();
 
@@ -109,8 +109,8 @@ public class ProductServices {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response newProduct(Product product) {
 
-        if (product.getSinger()==null || product.getTitle()==null)  return Response.status(500).entity(product).build();
-        this.pm.addProduct(product);
+        if (product.getName()==null || product.getStock()==0)  return Response.status(500).entity(product).build();
+        this.pm.addProduct(product.getName(), product.getPrice(), product.getStock());
         return Response.status(201).entity(product).build();
     }
 
